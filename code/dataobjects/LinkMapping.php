@@ -67,10 +67,13 @@ class LinkMapping extends DataObject {
           
           if($match->IgnoreGetParameters && $match->MappedLink == $matchQueryString[0]){ return $match; }
 
-					parse_str($matchQueryString[1], $matchParams); 
-					if($matchParams == $queryParams){
-						return $match;
-					}		
+          # check count of array before attempting to access second value
+          if(count($matchQueryString) > 1){
+            parse_str($matchQueryString[1], $matchParams); 
+            if($matchParams == $queryParams){
+              return $match;
+            }		
+          }
 				}
 			}
 
