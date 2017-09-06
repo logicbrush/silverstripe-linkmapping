@@ -10,7 +10,8 @@ class LinkMapping extends DataObject {
 	public static $db = array(
 		'MappedLink'   => 'Varchar(255)',
 		'RedirectType' => 'Enum("Page, Link", "Page")',
-		'RedirectLink' => 'Varchar(255)'
+		'RedirectLink' => 'Varchar(255)',
+    'IgnoreGetParameters' => 'Boolean'
 	);
 
 	public static $has_one = array(
@@ -64,7 +65,6 @@ class LinkMapping extends DataObject {
           // check for ignore get parameters, 
           // then check if the url matches it completely, except for the get parameters
           // -- this check verifies urls like "link/to?param1=value1&param2=value2" doesn't match to "link/towards/other/page"
-          
           if($match->IgnoreGetParameters && $match->MappedLink == $matchQueryString[0]){ return $match; }
 
           # check count of array before attempting to access second value
