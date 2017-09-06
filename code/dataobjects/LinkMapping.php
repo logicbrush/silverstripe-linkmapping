@@ -58,7 +58,15 @@ class LinkMapping extends DataObject {
 
 			if($matches->count()){
 				foreach ($matches as $match) {
+
 					$matchQueryString = explode('?', $match->MappedLink);
+
+          // check for ignore get parameters, 
+          // then check if the url matches it completely, except for the get parameters
+          // -- this check verifies urls like "link/to?param1=value1&param2=value2" doesn't match to "link/towards/other/page"
+          
+          if($match->IgnoreGetParameters && $match->MappedLink == $matchQueryString[0]){ return $match; }
+
 					parse_str($matchQueryString[1], $matchParams); 
 					if($matchParams == $queryParams){
 						return $match;
@@ -67,6 +75,8 @@ class LinkMapping extends DataObject {
 			}
 
 		}
+
+    
 	}
 
 	/**
